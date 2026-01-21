@@ -1,0 +1,329 @@
+"""
+Fan-made Freddy Fazbear Game
+A simple security office simulator inspired by Five Nights at Freddy's
+"""
+
+import pygame
+import random
+import sys
+from enum import Enum
+from dataclasses import dataclass
+
+# Initialize Pygame
+pygame.init()
+
+# Screen dimensions
+SCREEN_WIDTH = 1000
+SCREEN_HEIGHT = 700
+
+# Colors
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+RED = (200, 50, 50)
+GREEN = (50, 200, 50)
+GRAY = (100, 100, 100)
+DARK_RED = (139, 0, 0)
+
+class GameState(Enum):
+    MENU = 1
+    PLAYING = 2
+    GAME_OVER = 3
+    NIGHT_COMPLETE = 4
+
+@dataclass
+class Animatronic:
+    """Represents an animatronic character"""
+    name: str
+    x: int
+    y: int
+    width: int
+    height: int
+    color: tuple
+    threat_level: int = 0
+    position: str = "Stage"  # Stage, Hallway, Office
+    
+    def draw(self, surface):
+        """Draw the animatronic on the surface"""
+        pygame.draw.rect(surface, self.color, (self.x, self.y, self.width, self.height))
+        pygame.draw.rect(surface, WHITE, (self.x, self.y, self.width, self.height), 2)
+        
+        font = pygame.font.Font(None, 24)
+        text = font.render(self.name, True, WHITE)
+        text_rect = text.get_rect(center=(self.x + self.width // 2, self.y + self.height // 2))
+        surface.blit(text, text_rect)
+    
+    def update(self):
+        """Update animatronic behavior"""
+        if random.random() < 0.02:  # 2% chance per frame to move
+            if self.position == "Stage":
+                self.position = "Hallway"
+                self.threat_level = 3
+            elif self.position == "Hallway":
+                if random.random() < 0.5:
+                    self.position = "Office"
+                    self.threat_level = 5
+
+class SecurityOffice:
+    """Main game class"""
+    
+    def __init__(self):
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        pygame.display.set_caption("Freddy Fazbear's Security Office - Fan Game")
+        self.clock = pygame.time.Clock()
+        self.font_large = pygame.font.Font(None, 48)
+        self.font_medium = pygame.font.Font(None, 32)
+        self.font_small = pygame.font.Font(None, 24)
+        
+        self.state = GameState.MENU
+        self.night = 1
+        self.time = 0  # In seconds
+        self.power = 100
+        self.health = 100
+        self.animatronics = []
+        self.camera_view = "Main Hallway"
+        
+        self.init_animatronics()
+    
+    def init_animatronics(self):
+        """Initialize animatronic characters"""
+        self.animatronics = [
+            Animatronic("Freddy", 100, 150, 120, 100, (180, 80, 80)),
+            Animatronic("Bonnie", 250, 150, 120, 100, (100, 80, 150)),
+            Animatronic("Chica", 400, 150, 120, 100, (200, 180, 80)),
+            Animatronic("Foxy", 550, 150, 120, 100, (150, 100, 80)),
+        ]
+    
+    def handle_input(self):
+        """Handle user input"""
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                return False
+            
+            if event.type == pygame.KEYDOWN:
+                if self.state == GameState.MENU:
+                    if event.key == pygame.K_SPACE:
+                        self.start_game()
+                elif self.state == GameState.PLAYING:
+                    if event.key == pygame.K_d:  # Door defense
+                        if self.power > 10:
+                            self.power -= 10
+                            self.health += 20
+                            if self.health > 100:
+                                self.health = 100
+                    if event.key == pygame.K_c:  # Check cameras
+                        if self.power > 5:
+                            self.power -= 5
+                    if event.key == pygame.K_l:  # Lock doors
+                        if self.power > 15:
+                            self.power -= 15
+                            # Move animatronics away from office
+                            for anim in self.animatronics:
+                                if anim.position == "Office":
+                                    anim.position = "Hallway"
+                                    anim.threat_level = max(0, anim.threat_level - 1)
+                elif self.state == GameState.GAME_OVER:
+                    if event.key == pygame.K_SPACE:
+                        self.state = GameState.MENU
+                elif self.state == GameState.NIGHT_COMPLETE:
+                    if event.key == pygame.K_SPACE:
+                        self.next_night()
+            
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if self.state == GameState.PLAYING:
+                    # Check if clicking on animatronics to defend
+                    mouse_pos = pygame.mouse.get_pos()
+                    for anim in self.animatronics:
+                        rect = pygame.Rect(anim.x, anim.y, anim.width, anim.height)
+                        if rect.collidepoint(mouse_pos):
+                            if anim.position == "Office":
+                                anim.threat_level = max(0, anim.threat_level - 1)
+                                self.power -= 5
+        
+        return True
+    
+    def start_game(self):
+        """Start a new game"""
+        self.state = GameState.PLAYING
+        self.night = 1
+        self.time = 0
+        self.power = 100
+        self.health = 100
+        self.init_animatronics()
+    
+    def next_night(self):
+        """Move to the next night"""
+        self.night += 1
+        self.time = 0
+        self.power = 100
+        self.health = 100
+        self.init_animatronics()
+        
+        # Increase difficulty
+        for anim in self.animatronics:
+            anim.threat_level = min(5, anim.threat_level + (self.night - 1))
+        
+        self.state = GameState.PLAYING
+    
+    def update(self):
+        """Update game logic"""
+        if self.state == GameState.PLAYING:
+            self.time += 1
+            
+            # Power drain
+            self.power -= 0.1
+            if self.power < 0:
+                self.power = 0
+            
+            # Update animatronics
+            for anim in self.animatronics:
+                anim.update()
+                
+                # Increase threat if in office
+                if anim.position == "Office" and random.random() < 0.01:
+                    self.health -= anim.threat_level
+            
+            # Random threats
+            if random.random() < 0.001:
+                anim = random.choice(self.animatronics)
+                if anim.position == "Office":
+                    self.health -= 5
+            
+            # Check win/lose conditions
+            if self.health <= 0:
+                self.state = GameState.GAME_OVER
+            elif self.time > 600:  # 10 minutes = 600 frames at 60 FPS
+                self.state = GameState.NIGHT_COMPLETE
+            
+            # Gradually recover power
+            if self.power < 100:
+                self.power = min(100, self.power + 0.05)
+    
+    def draw(self):
+        """Draw the game"""
+        self.screen.fill(GRAY)
+        
+        if self.state == GameState.MENU:
+            self.draw_menu()
+        elif self.state == GameState.PLAYING:
+            self.draw_game()
+        elif self.state == GameState.GAME_OVER:
+            self.draw_game_over()
+        elif self.state == GameState.NIGHT_COMPLETE:
+            self.draw_night_complete()
+        
+        pygame.display.flip()
+    
+    def draw_menu(self):
+        """Draw main menu"""
+        title = self.font_large.render("FREDDY FAZBEAR'S", True, RED)
+        title2 = self.font_large.render("Security Office", True, WHITE)
+        subtitle = self.font_small.render("FAN-MADE GAME", True, (200, 200, 200))
+        instructions = self.font_small.render("Press SPACE to start", True, WHITE)
+        
+        title_rect = title.get_rect(center=(SCREEN_WIDTH // 2, 150))
+        title2_rect = title2.get_rect(center=(SCREEN_WIDTH // 2, 220))
+        subtitle_rect = subtitle.get_rect(center=(SCREEN_WIDTH // 2, 300))
+        instructions_rect = instructions.get_rect(center=(SCREEN_WIDTH // 2, 600))
+        
+        self.screen.blit(title, title_rect)
+        self.screen.blit(title2, title2_rect)
+        self.screen.blit(subtitle, subtitle_rect)
+        self.screen.blit(instructions, instructions_rect)
+        
+        # Draw animatronics on menu
+        for i, anim in enumerate(self.animatronics):
+            anim.x = 150 + i * 200
+            anim.y = 400
+            anim.draw(self.screen)
+    
+    def draw_game(self):
+        """Draw gameplay screen"""
+        # Top status bar
+        pygame.draw.line(self.screen, RED, (0, 50), (SCREEN_WIDTH, 50), 3)
+        
+        # Status text
+        night_text = self.font_medium.render(f"Night {self.night}", True, RED)
+        time_text = self.font_small.render(f"Time: {int(self.time // 60):02d}:{int(self.time % 60):02d}", True, WHITE)
+        power_text = self.font_small.render(f"Power: {int(self.power)}%", True, GREEN if self.power > 30 else RED)
+        health_text = self.font_small.render(f"Health: {int(self.health)}%", True, GREEN if self.health > 50 else RED)
+        
+        self.screen.blit(night_text, (20, 10))
+        self.screen.blit(time_text, (SCREEN_WIDTH - 250, 10))
+        self.screen.blit(power_text, (SCREEN_WIDTH - 250, 35))
+        self.screen.blit(health_text, (400, 10))
+        
+        # Draw animatronics
+        for anim in self.animatronics:
+            anim.draw(self.screen)
+        
+        # Draw controls
+        controls = [
+            "D - Close Door (10 power)",
+            "C - Check Cameras (5 power)",
+            "L - Lock All Doors (15 power)",
+            "CLICK - Defend"
+        ]
+        
+        for i, control in enumerate(controls):
+            text = self.font_small.render(control, True, WHITE)
+            self.screen.blit(text, (20, SCREEN_HEIGHT - 100 + i * 25))
+        
+        # Draw camera view
+        camera_box = pygame.Rect(650, 80, 330, 300)
+        pygame.draw.rect(self.screen, BLACK, camera_box)
+        pygame.draw.rect(self.screen, RED, camera_box, 2)
+        
+        camera_text = self.font_small.render(f"Camera: {self.camera_view}", True, RED)
+        self.screen.blit(camera_text, (660, 90))
+        
+        no_threat = self.font_small.render("No threats detected", True, GREEN)
+        self.screen.blit(no_threat, (660, 200))
+        
+        # Draw threat indicators
+        threat_text = self.font_small.render("Threat Levels:", True, RED)
+        self.screen.blit(threat_text, (650, 420))
+        
+        for i, anim in enumerate(self.animatronics):
+            threat_color = RED if anim.threat_level >= 3 else GRAY
+            anim_threat = self.font_small.render(f"{anim.name}: {'█' * anim.threat_level}", True, threat_color)
+            self.screen.blit(anim_threat, (650, 450 + i * 25))
+    
+    def draw_game_over(self):
+        """Draw game over screen"""
+        game_over_text = self.font_large.render("GAME OVER", True, DARK_RED)
+        message_text = self.font_medium.render("You didn't survive the night...", True, RED)
+        restart_text = self.font_small.render("Press SPACE to return to menu", True, WHITE)
+        
+        self.screen.blit(game_over_text, (SCREEN_WIDTH // 2 - 200, 200))
+        self.screen.blit(message_text, (SCREEN_WIDTH // 2 - 200, 350))
+        self.screen.blit(restart_text, (SCREEN_WIDTH // 2 - 200, 500))
+    
+    def draw_night_complete(self):
+        """Draw night complete screen"""
+        night_complete_text = self.font_large.render("NIGHT COMPLETE!", True, GREEN)
+        message_text = self.font_medium.render(f"Night {self.night} Survived", True, WHITE)
+        next_text = self.font_small.render("Press SPACE for next night", True, GREEN)
+        
+        self.screen.blit(night_complete_text, (SCREEN_WIDTH // 2 - 250, 200))
+        self.screen.blit(message_text, (SCREEN_WIDTH // 2 - 200, 350))
+        self.screen.blit(next_text, (SCREEN_WIDTH // 2 - 200, 500))
+    
+    def run(self):
+        """Main game loop"""
+        running = True
+        while running:
+            running = self.handle_input()
+            self.update()
+            self.draw()
+            self.clock.tick(60)  # 60 FPS
+        
+        pygame.quit()
+        sys.exit()
+
+def main():
+    """Entry point"""
+    game = SecurityOffice()
+    game.run()
+
+if __name__ == "__main__":
+    main()
