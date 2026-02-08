@@ -1,266 +1,193 @@
-.. image:: https://raw.githubusercontent.com/pygame/pygame/main/docs/reST/_static/pygame_logo.svg
-  :alt: pygame
-  :target: https://www.pygame.org/
-
-
-|AppVeyorBuild| |PyPiVersion| |PyPiLicense|
-|Python3| |GithubCommits| |BlackFormatBadge|
-
-Pygame_ is a free and open-source cross-platform library
-for the development of multimedia applications like video games using Python.
-It uses the `Simple DirectMedia Layer library`_ and several other
-popular libraries to abstract the most common functions, making writing
-these programs a more intuitive task.
-
-`We need your help`_ to make pygame the best it can be!
-New contributors are welcome.
-
-
-Installation
-------------
-
-Before installing pygame, you must check that Python is installed
-on your machine. To find out, open a command prompt (if you have
-Windows) or a terminal (if you have MacOS or Linux) and type this:
-::
-
-   python --version
-
-
-If a message such as "Python 3.8.10" appears, it means that Python
-is correctly installed. If an error message appears, it means that
-it is not installed yet. You must then go to the `official website
-<https://www.python.org/downloads/>`_ to download it.
-
-Once Python is installed, you have to perform a final check: you have
-to see if pip is installed. Generally, pip is pre-installed with
-Python but we are never sure. Same as for Python, type the following
-command:
-::
-
-   pip --version
-
-
-If a message such as "pip 20.0.2 from /usr/lib/python3/dist-packages/pip
-(python 3.8)" appears, you are ready to install pygame! To install
-it, enter this command:
-::
-
-   pip install pygame
-
-Once pygame is installed, quickly test your library by entering the following
-command, which opens one of the many example games that comes pre-installed: 
-::
-
-	python3 -m pygame.examples.aliens
-
-
-If this doesn’t work, the `Getting Started 
-<https://www.pygame.org/wiki/GettingStarted/>`_ section of the official 
-website has more information for platform specific issues, such as adding
-python to your machine’s PATH settings
-
-
-Help
-----
-
-If you are just getting started with pygame, you should be able to
-get started fairly quickly.  Pygame comes with many tutorials and
-introductions.  There is also full reference documentation for the
-entire library. Browse the documentation on the `docs page`_. You
-can also browse the documentation locally by running
-``python -m pygame.docs`` in your terminal. If the docs aren't found
-locally, it'll launch the online website instead.
-
-The online documentation stays up to date with the development version
-of pygame on GitHub.  This may be a bit newer than the version of pygame
-you are using. To upgrade to the latest full release, run
-``pip install pygame --upgrade`` in your terminal.
-
-Best of all, the examples directory has many playable small programs
-which can get you started playing with the code right away.
-
-
-Features
-----------
-
-Pygame is a powerful library for game development, offering a wide
-range of features to simplify your coding journey. Let's delve into
-what pygame has to offer:
-
-Graphics - With pygame, creating dynamic and engaging graphics has
-never been easier. The library provides simple yet effective tools for
-2D graphics and animation, including support for images, rectangles,
-and polygon shapes. Whether you're a seasoned game developer or just
-starting out, pygame has you covered.
-
-Sound - Pygame also includes support for playing and manipulating sound
-and music, making it easy to add sound effects and background music to
-your games. With support for WAV, MP3, and OGG file formats, you have
-plenty of options to choose from.
-
-Input - Pygame provides intuitive functions for handling keyboard, mouse,
-and joystick input, allowing you to quickly and easily implement player
-controls in your games. No more struggling with complex input code, pygame
-makes it simple.
-
-Game Development - Lastly, pygame provides a comprehensive suite of tools
-and features specifically designed for game development. From collision
-detection to sprite management, pygame has everything you need to create
-exciting and engaging games. Whether you're building a platformer, puzzle
-game, or anything in between, pygame has you covered.
-
-
-Building From Source
---------------------
-
-If you want to use features that are currently in development,
-or you want to contribute to pygame, you will need to build pygame
-locally from its source code, rather than pip installing it.
-
-Installing from source is fairly automated. The most work will
-involve compiling and installing all the pygame dependencies.  Once
-that is done, run the ``setup.py`` script which will attempt to
-auto-configure, build, and install pygame.
-
-Much more information about installing and compiling is available
-on the `Compilation wiki page`_.
-
-Contribute
-----------
-
-* `Documentation Contributions <https://github.com/pygame/pygame/tree/main/docs>`_ - Guidelines for contributing to the main documentations
-* `Writing your first unit test <http://renesd.blogspot.com/2019/11/draft-2-of-lets-write-unit-test.html>`_ - Step by step guide on how to write your first unit test in Python for Pygame.
-* `How to Hack Pygame <https://www.pygame.org/wiki/Hacking>`_ - Information on hacking, developing, and modifying Pygame
-* `Issue Tracker for beginners <https://github.com/pygame/pygame/labels/good%20first%20issue>`_ - A way for beginners to contribute to the project
-* `Bugs & Patches <https://www.pygame.org/wiki/patchesandbugs>`_ - Report bugs
-* `Communication tools <https://www.pygame.org/wiki/info>`_ - More information and ways to get in touch with the Pygame team
-
-
-Credits
--------
-
-Thanks to everyone who has helped contribute to this library.
-Special thanks are also in order.
-
-* Marcus Von Appen: many changes, and fixes, 1.7.1+ freebsd maintainer
-* Lenard Lindstrom: the 1.8+ windows maintainer, many changes, and fixes
-* Brian Fisher for svn auto builder, bug tracker and many contributions
-* Rene Dudfield: many changes, and fixes, 1.7+ release manager/maintainer
-* Phil Hassey for his work on the pygame.org website
-* DR0ID for his work on the sprite module
-* Richard Goedeken for his smoothscale function
-* Ulf Ekström for his pixel perfect collision detection code
-* Pete Shinners: original author
-* David Clark for filling the right-hand-man position
-* Ed Boraas and Francis Irving: Debian packages
-* Maxim Sobolev: FreeBSD packaging
-* Bob Ippolito: MacOS and OS X porting (much work!)
-* Jan Ekhol, Ray Kelm, and Peter Nicolai: putting up with early design ideas
-* Nat Pryce for starting our unit tests
-* Dan Richter for documentation work
-* TheCorruptor for his incredible logos and graphics
-* Nicholas Dudfield: many test improvements
-* Alex Folkner for pygame-ctypes
-
-Thanks to those sending in patches and fixes: Niki Spahiev, Gordon
-Tyler, Nathaniel Pryce, Dave Wallace, John Popplewell, Michael Urman,
-Andrew Straw, Michael Hudson, Ole Martin Bjoerndalen, Herve Cauwelier,
-James Mazer, Lalo Martins, Timothy Stranex, Chad Lester, Matthias
-Spiller, Bo Jangeborg, Dmitry Borisov, Campbell Barton, Diego Essaya,
-Eyal Lotem, Regis Desgroppes, Emmanuel Hainry, Randy Kaelber
-Matthew L Daniel, Nirav Patel, Forrest Voight, Charlie Nolan,
-Frankie Robertson, John Krukoff, Lorenz Quack, Nick Irvine,
-Michael George, Saul Spatz, Thomas Ibbotson, Tom Rothamel, Evan Kroske,
-Cambell Barton.
-
-And our bug hunters above and beyond: Angus, Guillaume Proux, Frank
-Raiser, Austin Henry, Kaweh Kazemi, Arturo Aldama, Mike Mulcheck,
-Michael Benfield, David Lau
-
-There's many more folks out there who've submitted helpful ideas, kept
-this project going, and basically made our life easier.  Thanks!
-
-Many thank you's for people making documentation comments, and adding to the
-pygame.org wiki.
-
-Also many thanks for people creating games and putting them on the
-pygame.org website for others to learn from and enjoy.
-
-Lots of thanks to James Paige for hosting the pygame bugzilla.
-
-Also a big thanks to Roger Dingledine and the crew at SEUL.ORG for our
-excellent hosting.
-
-Dependencies
-------------
-
-Pygame is obviously strongly dependent on SDL and Python.  It also
-links to and embeds several other smaller libraries.  The font
-module relies on SDL_ttf, which is dependent on freetype.  The mixer
-(and mixer.music) modules depend on SDL_mixer.  The image module
-depends on SDL_image, which also can use libjpeg and libpng.  The
-transform module has an embedded version of SDL_rotozoom for its
-own rotozoom function.  The surfarray module requires the Python
-NumPy package for its multidimensional numeric arrays.
-Dependency versions:
-
-
-+----------+------------------------+
-| CPython  | >= 3.6 (Or use PyPy3)  |
-+----------+------------------------+
-| SDL      | >= 2.0.8               |
-+----------+------------------------+
-| SDL_mixer| >= 2.0.0               |
-+----------+------------------------+
-| SDL_image| >= 2.0.2               |
-+----------+------------------------+
-| SDL_ttf  | >= 2.0.11              |
-+----------+------------------------+
-| SDL_gfx  | (Optional, vendored in)|
-+----------+------------------------+
-| NumPy    | >= 1.6.2 (Optional)    |
-+----------+------------------------+
-
-
-
-License
--------
-
-This library is distributed under `GNU LGPL version 2.1`_, which can
-be found in the file ``docs/LGPL.txt``.  We reserve the right to place
-future versions of this library under a different license.
-
-This basically means you can use pygame in any project you want,
-but if you make any changes or additions to pygame itself, those
-must be released with a compatible license (preferably submitted
-back to the pygame project).  Closed source and commercial games are fine.
-
-The programs in the ``examples`` subdirectory are in the public domain.
-
-See docs/licenses for licenses of dependencies.
-
-
-.. |AppVeyorBuild| image:: https://ci.appveyor.com/api/projects/status/x4074ybuobsh4myx?svg=true
-   :target: https://ci.appveyor.com/project/pygame/pygame
-
-.. |PyPiVersion| image:: https://img.shields.io/pypi/v/pygame.svg?v=1
-   :target: https://pypi.python.org/pypi/pygame
-
-.. |PyPiLicense| image:: https://img.shields.io/pypi/l/pygame.svg?v=1
-   :target: https://pypi.python.org/pypi/pygame
-
-.. |Python3| image:: https://img.shields.io/badge/python-3-blue.svg?v=1
-
-.. |GithubCommits| image:: https://img.shields.io/github/commits-since/pygame/pygame/2.1.2.svg
-   :target: https://github.com/pygame/pygame/compare/2.1.2...main
-
-.. |BlackFormatBadge| image:: https://img.shields.io/badge/code%20style-black-000000.svg
-    :target: https://github.com/psf/black
-
-.. _pygame: https://www.pygame.org
-.. _Simple DirectMedia Layer library: https://www.libsdl.org
-.. _We need your help: https://www.pygame.org/contribute.html
-.. _Compilation wiki page: https://www.pygame.org/wiki/Compilation
-.. _docs page: https://www.pygame.org/docs/
-.. _GNU LGPL version 2.1: https://www.gnu.org/copyleft/lesser.html
+import os, sys, random, time
+"""
+X-TRACKER: RIFT - ELITE EDITION
+A tactical terminal-based roguelike with combo systems and rift mechanics.
+Author: [Your Name/GitHub Handle]
+Version: 4.5
+"""
+
+import os
+import sys
+import random
+import time
+
+# --- CROSS-PLATFORM INPUT HANDLING ---
+try:
+    import msvcrt
+    def get_key():
+        k = msvcrt.getch().lower()
+        return k.decode() if isinstance(k, bytes) else k
+except ImportError:
+    import tty, termios
+    def get_key():
+        fd = sys.stdin.fileno()
+        old_settings = termios.tcgetattr(fd)
+        try:
+            tty.setraw(sys.stdin.fileno())
+            ch = sys.stdin.read(1).lower()
+        finally:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old_settings)
+        return ch
+
+# --- COLORS & UI CONSTANTS ---
+K = {
+    "B": "\033[94m", "C": "\033[96m", "G": "\033[92m", "Y": "\033[93m", 
+    "R": "\033[91m", "BG": "\033[44m", "W": "\033[97m", "E": "\033[0m", 
+    "F": "\033[1m", "P": "\033[95m"
+}
+
+class Game:
+    def __init__(self, mode):
+        self.m, self.p, self.s, self.a, self.t, self.dead_h = mode, [3, 10], 0, True, [], []
+        self.turn = 0
+        self.kill_log = []
+        self.combo = False
+        self.bullet_path = []
+        
+        h_nums = {"EASY": (2, 5), "MEDIUM": (12, 18), "HARD": (30, 45)}
+        count = random.randint(*h_nums[mode])
+        self.h = [[pos, random.random() < 0.5] for pos in self.gen(count, True)]
+        self.c = self.gen(5, False)
+
+    def gen(self, n, is_h):
+        items, buf = [], (1 if self.m == "HARD" else 2)
+        while len(items) < n:
+            pos = [random.randint(0, 6), random.randint(0, 10 if is_h else 9)]
+            if pos != [3, 0] and (not is_h or (abs(pos[0]-3) > buf or abs(pos[1]-10) > buf)):
+                if pos not in items: items.append(pos)
+        return items
+
+    def shoot(self, direction_input):
+        if not self.h: return f"{K['C']}NO TARGETS LEFT!{K['E']}"
+        
+        dx = (1 if 'd' in direction_input else -1 if 'a' in direction_input else 0)
+        dy = (1 if 'w' in direction_input else -1 if 's' in direction_input else 0)
+        
+        self.bullet_path = []
+        for i in range(1, 12):
+            bx, by = self.p[0] + (dx * i), self.p[1] + (dy * i)
+            if 0 <= bx <= 6 and 0 <= by <= 10: self.bullet_path.append([bx, by])
+            else: break
+        
+        self.render_frame(f"{K['W']}>>> FIRING!{K['E']}")
+        time.sleep(0.12)
+        self.bullet_path = [] 
+
+        targets = [hd for hd in self.h if (1 if hd[0][0]>self.p[0] else -1 if hd[0][0]<self.p[0] else 0) == dx and (1 if hd[0][1]>self.p[1] else -1 if hd[0][1]<self.p[1] else 0) == dy]
+        
+        if not targets: return f"{K['R']}MISS - NO TARGET{K['E']}"
+        target_data = min(targets, key=lambda d: (abs(d[0][0]-self.p[0]) + abs(d[0][1]-self.p[1])))
+        
+        if random.random() < 0.5:
+            self.dead_h.append(list(target_data[0]))
+            self.h.remove(target_data)
+            self.kill_log.append(self.turn)
+            if len(self.kill_log) >= 3 and self.kill_log[-1] - self.kill_log[-3] <= 5:
+                self.combo = True
+            return f"{K['G']}HIT! NEUTRALIZED{K['E']}"
+        return f"{K['R']}MISS!{K['E']}"
+
+    def get_rank(self):
+        if self.s >= 200: return f"{K['P']}RIFT LEGEND{K['E']}"
+        if self.s >= 100: return f"{K['C']}ELITE TRACKER{K['E']}"
+        if self.s >= 40: return f"{K['G']}STRIKER{K['E']}"
+        return f"{K['R']}FLEEING COWARD{K['E']}"
+
+    def render_frame(self, msg=""):
+        os.system('cls' if os.name == 'nt' else 'clear')
+        combo_txt = f" {K['P']}{K['F']}COMBO ACTIVE (3x Coins)!{K['E']}" if self.combo else ""
+        head = (f"{K['B']}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n"
+                f"┃{K['E']} {K['F']}MODE:{K['E']} {self.m:<6} {K['B']}|{K['E']} {K['F']}SCORE:{K['E']} {K['Y']}{self.s:03}{K['E']} {K['B']}┃\n"
+                f"┃{K['E']} {K['F']}HUNTERS:{K['E']} {K['R']}{len(self.h):02}{K['E']} {combo_txt:<20} {K['B']}┃\n"
+                f"┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛{K['E']}")
+        
+        rows = []
+        for z in range(10, -1, -1):
+            r = ["·"] * 7
+            for i in self.c: (z==i[1] and r.__setitem__(i[0], f"{K['Y']}${K['E']}"))
+            for i in self.t: (z==i[1] and r.__setitem__(i[0], f"{K['R']}_{K['E']}"))
+            for i in self.h: (z==i[0][1] and r.__setitem__(i[0][0], f"{K['R']}!{K['E']}"))
+            for i in self.dead_h: (z==i[1] and r.__setitem__(i[0], f"{K['P']}#{K['E']}"))
+            for b in self.bullet_path: (z==b[1] and r.__setitem__(b[0], f"{K['W']}*{K['E']}"))
+            if z == 0: r[3] = f"{K['G']}@{K['E']}"
+            if z == self.p[1]: r[self.p[0]] = f"{K['C']}{K['F']}X{K['E']}"
+            rows.append(f"          {K['B']}|{K['E']} {' '.join(r)} {K['B']}|{K['E']}")
+        print(head + "\n" + "\n".join(rows) + f"\n{msg}")
+
+    def play(self):
+        msg = ""
+        while self.a:
+            self.render_frame(msg + f"\n{K['C']}ACTION >> {K['E']}")
+            inp = input().lower()
+            self.turn += 1
+            msg = ""
+            if 'f' in inp: msg = self.shoot(inp)
+            else:
+                new_p = list(self.p)
+                if 'w' in inp: new_p[1] = min(10, new_p[1]+1)
+                if 's' in inp: new_p[1] = max(0, new_p[1]-1)
+                if 'a' in inp: new_p[0] = max(0, new_p[0]-1)
+                if 'd' in inp: new_p[0] = min(6, new_p[0]+1)
+                
+                dist = abs(new_p[0]-3) + abs(new_p[1]-0)
+                if new_p == [3, 0]:
+                    print(f"\n{K['G']}ESCAPED! SCORE: {self.s}{K['E']}")
+                    print(f"RANK: {self.get_rank()}")
+                    self.a = False; break
+                elif dist == 1:
+                    self.p = [new_p[0], new_p[1] + 1]
+                    for pos in self.gen(len(self.h), True): self.h.append([pos, False])
+                    for hd in self.h: hd[1] = False
+                    msg = f"{K['R']}RIFT TRIGGERED!{K['E']}"
+                elif new_p in self.dead_h: msg = f"{K['Y']}BLOCKED!{K['E']}"
+                else: self.p = new_p
+
+            # Hunter Logic
+            for hd in self.h:
+                h, scav = hd
+                t = self.p if (not scav or not self.c) else min(self.c, key=lambda c: abs(c[0]-h[0])+abs(c[1]-h[1]))
+                for i in (0,1):
+                    if h[i] != t[i]: h[i] += 1 if t[i] > h[i] else -1
+                if scav and h in self.c: self.c.remove(h)
+
+            # Hazard Conversion
+            locs = {}
+            for hd in self.h: locs[tuple(hd[0])] = locs.get(tuple(hd[0]), 0) + 1
+            self.h = [hd for hd in self.h if locs[tuple(hd[0])] == 1 or [self.t.append(list(hd[0])) and False]]
+            
+            if self.p in [h[0] for h in self.h] or self.p in self.t:
+                print(f"\n{K['R']}WASTED! FINAL SCORE: {self.s}{K['E']}\nRANK: {K['R']}DEAD MEAT{K['E']}")
+                self.a = False
+            
+            for coin in list(self.c):
+                if self.p == coin:
+                    self.s += 30 if self.combo else 10
+                    self.c.remove(coin)
+                    self.combo = False 
+        input("\n[PRESS ENTER TO EXIT]")
+
+def main_menu():
+    m, s, opts = "EASY", 0, ["START", "MODE", "HOW TO", "EXIT"]
+    while True:
+        os.system('cls' if os.name == 'nt' else 'clear')
+        print(f"{K['B']}┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓\n┃{K['E']}        {K['C']}{K['F']}X-TRACKER: ELITE{K['E']}           {K['B']}┃\n┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫{K['E']}")
+        for i, o in enumerate(opts):
+            lbl = o if o != 'MODE' else f"MODE: {m}"
+            txt = f" > {lbl}"; pad = " " * (34 - len(txt))
+            clr = K['BG']+K['W'] if i == s else ""
+            print(f"{K['B']}┃{K['E']} {clr}{txt}{pad}{K['E']} {K['B']}┃{K['E']}")
+        print(f"{K['B']}┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛\n {K['C']}[A/D] Move [S] Select{K['E']}")
+        
+        k = get_key()
+        if k == 'a': s = (s - 1) % len(opts)
+        elif k == 'd': s = (s + 1) % len(opts)
+        elif k == 's':
+            if s == 0: Game(m).play()
+            elif s == 1: m = ["EASY", "MEDIUM", "HARD"][(["EASY", "MEDIUM", "HARD"].index(m)+1)%3]
+            elif s == 2:
+                print(f"\n{K['P']}COMBO:{K['E']} 3 kills in 5 turns = 3x Coins.\n{K['W']}TRACE:{K['E']} Shots show path.\n{K['G']}RANK:{K['E']} Get out alive to earn status.")
+                input("\n[ENTER]")
+            elif s == 3: break
+
+if __name__ == "__main__":
+    main_menu()
